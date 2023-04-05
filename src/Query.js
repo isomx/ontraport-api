@@ -38,24 +38,6 @@ export class Query {
         }
         obj.value = { value };
     }
-
-    if (op === 'in' || op === 'IN') {
-      const formatted = [];
-      for(let val of value) {
-        formatted.push({ value: val });
-      }
-      op = 'IN';
-      obj.value = { list: formatted };
-    } else if (op === 'is' || op === 'IS' || op === 'isNull') {
-      op = 'IS';
-      obj.value = 'NULL';
-    } else {
-      if (typeof value === 'undefined') {
-        value = op;
-        op = '=';
-      }
-      obj.value = { value };
-    }
     obj.op = op;
     if (this.condition.length) {
       this.condition.push(
