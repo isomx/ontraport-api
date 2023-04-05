@@ -1,0 +1,71 @@
+{
+  "name": "@isomorix/ontraport-api",
+  "version": "4.2.23",
+  "main": "./dist/index.js",
+  "module": "./src/index.js",
+  "browser": "./src/browser.js",
+  "author": "Josh Cope <josh@isomx.com>",
+  "homepage": "https://isomx.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/isomx/amf.git",
+    "directory": "packages/ontraport-api"
+  },
+  "bugs": {
+    "url": "https://github.com/isomx/amf/issues"
+  },
+  "files": [
+    "lib/**/*",
+    "dist/**/*",
+    "jsdocResult/**/*",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "package.json"
+  ],
+  "sideEffects": [
+    "**/logic/*",
+    "**/trxLogic/*"
+  ],
+  "dependencies": {
+    "@isomorix/url-parse": "^4.2.23",
+    "abort-controller": "^3.0.0",
+    "cross-fetch": "^3.1.5",
+    "rxjs": "^6.6.3",
+    "source-map-support": "^0.5.19"
+  },
+  "devDependencies": {
+    "@isomorix/cli": "^4.2.23",
+    "@isomorix/cli-utils": "^4.2.23"
+  },
+  "scripts": {
+    "build": "yarn run build:tools && yarn run build:app",
+    "build:watch": "yarn run build:tools && isomx batch --queue 'build --copy-all-files --skip-initial-build --tools -w' 'build --clean --copy-all-files --source-maps inline -w' 'build --clean --copy-all-files --source-maps inline --type es -w' --exec-queue",
+    "build:tools": "isomx build --clean --source-maps inline --copy-all-files --tools",
+    "build:tools:watch": "isomx build --clean --source-maps inline --copy-all-files --tools -w",
+    "build:app": "isomx batch --queue 'build --clean --copy-all-files --source-maps inline' 'build --clean --copy-all-files --source-maps inline --type es' --exec-queue",
+    "build:app:watch": "isomx batch --queue 'build --clean --copy-all-files --source-maps inline -w' 'build --clean --copy-all-files --source-maps inline --type es -w' --exec-queue",
+    "start": "isomx-utils start --inspect --script-env -w"
+  },
+  "isomorix": {
+    "constants": {
+      "TOOLS_DIR": null,
+      "SERVER_ENTRY": "tester"
+    },
+    "provision": {
+      "packageJson": {
+        "browser": "./%ES_DIR%/browser.js"
+      }
+    },
+    "env": {
+      "localdev": {
+        "provision": {
+          "packageJson": {
+            "browser": "./%SRC_DIR%/browser.js"
+          }
+        }
+      }
+    }
+  }
+}
